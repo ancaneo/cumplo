@@ -1,0 +1,166 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<div style = "text-align: center;">
+  <h1>Sistema de consultas de indicadores financieros</h1>
+  <%= form_tag("/", method: "get", multipart: true, enforce_utf8: false) do %>
+    <%= label_tag(:start, "Inicio:") %>
+    <input id="start" name="start" type="date" min="1990-01-01" max="<%= Date.current + 1.month %>" 
+      value="<%= @start_date %>"/>
+    <input id="finish" name="finish" type="date" min="1990-01-01" max="<%= Date.current + 1.month %>" 
+    value="<%= @finish_date %>"/>
+    <%= submit_tag("Consultar") %>
+    <div style="color: red;"><%= @error %></div>
+  <% end %>
+  <% if @days.length > 0 %>
+    <h3>UF y Dólar</h3>
+    <table class="table-bordered table-condensed" style="display: -webkit-inline-box">
+      <thead>
+        <tr>
+          <th>
+            Día
+          </th>
+          <th>
+            UF
+          </th>
+          <th>
+            Dólar
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @days.each_with_index do |day, index| %>
+          <tr>
+            <td><%= day %></td>
+            <td><%= @ufData[index] %></td>
+            <td><%= @dollarData[index] %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td>Mínimo</td>
+          <td><%= @ufMin %></td>
+          <td><%= @dollarMin %></td>
+        </tr>
+        <tr>
+          <td>Promedio</td>
+          <td><%= @ufAvg %></td>
+          <td><%= @dollarAvg %></td>
+        </tr>
+        <tr>
+          <td>Máximo</td>
+          <td><%= @ufMax %></td>
+          <td><%= @dollarMax %></td>
+        </tr>
+      </tbody>
+    </table>
+    <h4> UF </h4>
+    <%= line_chart(@ufChart, min: @ufMin - (@ufBw / 10), max:  @ufMax + (@ufBw / 10)) %>
+    <h4> Dólar </h4>
+    <%= line_chart(@dollarChart, min: @dollarMin - (@dollarBw / 10), max:  @dollarMax + (@dollarBw / 10)) %>
+    <h3> Tasa máxima convecional </h3>
+    <table class="table-bordered table-condensed" style="display: -webkit-inline-box">
+      <thead>
+        <tr>
+          <th>
+            Día
+          </th>
+          <th>
+            No reajustables, CLP, <= 90 días, <= 5.000 UF
+          </th>
+          <th>
+            No reajustables, CLP, > 90 días, <= 50 UF
+          </th>
+          <th>
+            No reajustables, CLP, > 90 días, > 50 UF, <= 200 UF
+          </th>
+          <th>
+            No reajustables, CLP, > 90 días, > 200 UF, <= 5000 UF
+          </th>
+          <th>
+            No reajustables, CLP, > 90 días, > 5000 UF
+          </th>
+          <th>
+           Reajustables, CLP, < 1 año
+          </th>
+          <th>
+           Reajustables, CLP, >= 1 año, <= 2000 UF
+          </th>
+          <th>
+           Reajustables, CLP, >= 1 año, > 2000 UF
+          </th>
+          <th>
+           Reajustables, moneda extranjera, <= 2000 UF
+          </th>
+          <th>
+           Reajustables, moneda extranjera, > 2000 UF
+          </th>
+          <th>
+           Otras
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @days.each_with_index do |day, index| %>
+          <tr>
+            <td><%= day %></td>
+            <td><%= @nationalShortLow[index] %></td>
+            <td><%= @nationalShortHigh[index] %></td>
+            <td><%= @nationalLongVeryLow[index] %></td>
+            <td><%= @nationalLongLow[index] %></td>
+            <td><%= @nationalLongHigh[index] %></td>
+            <td><%= @nationalLongVeryHigh[index] %></td>
+            <td><%= @nationalChangeShort[index] %></td>
+            <td><%= @nationalChangeLongLow[index] %></td>
+            <td><%= @nationalChangeLongHigh[index] %></td>
+            <td><%= @foreignLowTcm[index] %></td>
+            <td><%= @foreignHighTcm[index] %></td>
+            <td><%= @otherTcm[index] %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td>Mínimo</td>
+          <td><%= @nationalShortLow.min %></td>
+          <td><%= @nationalShortHigh.min %></td>
+          <td><%= @nationalLongVeryLow.min %></td>
+          <td><%= @nationalLongLow.min %></td>
+          <td><%= @nationalLongHigh.min %></td>
+          <td><%= @nationalLongVeryHigh.min %></td>
+          <td><%= @nationalChangeShort.min %></td>
+          <td><%= @nationalChangeLongLow.min %></td>
+          <td><%= @nationalChangeLongHigh.min %></td>
+          <td><%= @foreignLowTcm.min %></td>
+          <td><%= @foreignHighTcm.min %></td>
+          <td><%= @otherTcm.min %></td>
+        </tr>
+        <tr>
+          <td>Promedio</td>
+          <td><%= @nationalShortLow.all? ? @nationalShortLow.sum /  @count : '' %></td>
+          <td><%= @nationalShortHigh.all? ? @nationalShortHigh.sum /  @count : '' %></td>
+          <td><%= @nationalLongVeryLow.all? ? @nationalLongVeryLow.sum /  @count : '' %></td>
+          <td><%= @nationalLongLow.all? ? @nationalLongLow.sum /  @count : '' %></td>
+          <td><%= @nationalLongHigh.all? ? @nationalLongHigh.sum /  @count : '' %></td>
+          <td><%= @nationalLongVeryHigh.all? ? @nationalLongVeryHigh.sum /  @count : '' %></td>
+          <td><%= @nationalChangeLongLow.all? ? @nationalChangeLongLow.sum /  @count : '' %></td>
+          <td><%= @nationalChangeLongHigh.all? ? @nationalChangeLongHigh.sum /  @count : '' %></td>
+          <td><%= @foreignLowTcm.all? ? @foreignLowTcm.sum /  @count : '' %></td>
+          <td><%= @foreignHighTcm.all? ? @foreignHighTcm.sum /  @count : '' %></td>
+          <td><%= @otherTcm.all? ? @otherTcm.sum /  @count : ''%></td>
+        </tr>
+        <tr>
+          <td>Máximo</td>
+          <td><%= @nationalShortLow.max %></td>
+          <td><%= @nationalShortHigh.max %></td>
+          <td><%= @nationalLongVeryLow.max %></td>
+          <td><%= @nationalLongLow.max %></td>
+          <td><%= @nationalLongHigh.max %></td>
+          <td><%= @nationalLongVeryHigh.max %></td>
+          <td><%= @nationalChangeShort.max %></td>
+          <td><%= @nationalChangeLongLow.max %></td>
+          <td><%= @nationalChangeLongHigh.max %></td>
+          <td><%= @foreignLowTcm.max %></td>
+          <td><%= @foreignHighTcm.max %></td>
+          <td><%= @otherTcm.max %></td>
+        </tr>
+      </tbody>
+    </table>
+    <%= line_chart(@tmcChart) %>
+  <% end%>
+</div>

@@ -1,24 +1,17 @@
-# README
+Sistema de consulta del valor en pesos de la UF y el dólar y tasa máxima convencional
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Clone el proyecto
+> git clone [link]
 
-Things you may want to cover:
+Installe gemas
+> gem install bundler
+> bunlde install
 
-* Ruby version
+> bundle install
+Para correr el sistema ejecutar desde la terminal:
+> rails server
 
-* System dependencies
+En su navegador favorito, ingrese a:
+> localhost:3000
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Seleccione un rango de fechas válido (01/01/1990 hasta un mes siguiente). No habrán datos de valor de dólar para los días sábados, domingos y los días futuros (a excepción del siguiente día hábil después del cierre de bolsa). Antes de 1990, SBIF no entrega datos históricos.
