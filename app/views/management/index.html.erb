@@ -30,24 +30,24 @@
         <% @days.each_with_index do |day, index| %>
           <tr>
             <td><%= day %></td>
-            <td><%= @ufData[index] %></td>
-            <td><%= @dollarData[index] %></td>
+            <td><%= number_with_delimiter(@ufData[index], :delimiter => ".", :separator => ",") %></td>
+            <td><%= number_with_delimiter(@dollarData[index], :delimiter => ".", :separator => ",") %></td>
           </tr>
         <% end %>
         <tr>
           <td>Mínimo</td>
-          <td><%= @ufMin %></td>
-          <td><%= @dollarMin %></td>
+          <td><%= number_with_delimiter(@ufMin, :delimiter => ".", :separator => ",") %></td>
+          <td><%= number_with_delimiter(@dollarMin, :delimiter => ".", :separator => ",") %></td>
         </tr>
         <tr>
           <td>Promedio</td>
-          <td><%= @ufAvg %></td>
-          <td><%= @dollarAvg %></td>
+          <td><%= number_with_delimiter(@ufAvg.round(2), :delimiter => ".", :separator => ",") %></td>
+          <td><%= number_with_delimiter(@dollarAvg.round(2), :delimiter => ".", :separator => ",") %></td>
         </tr>
         <tr>
           <td>Máximo</td>
-          <td><%= @ufMax %></td>
-          <td><%= @dollarMax %></td>
+          <td><%= number_with_delimiter(@ufMax, :delimiter => ".", :separator => ",") %></td>
+          <td><%= number_with_delimiter(@dollarMax, :delimiter => ".", :separator => ",") %></td>
         </tr>
       </tbody>
     </table>
@@ -64,6 +64,9 @@
           </th>
           <th>
             No reajustables, CLP, <= 90 días, <= 5.000 UF
+          </th>
+          <th>
+            No reajustables, CLP, <= 90 días, > 5.000 UF
           </th>
           <th>
             No reajustables, CLP, > 90 días, <= 50 UF
@@ -101,63 +104,64 @@
         <% @days.each_with_index do |day, index| %>
           <tr>
             <td><%= day %></td>
-            <td><%= @nationalShortLow[index] %></td>
-            <td><%= @nationalShortHigh[index] %></td>
-            <td><%= @nationalLongVeryLow[index] %></td>
-            <td><%= @nationalLongLow[index] %></td>
-            <td><%= @nationalLongHigh[index] %></td>
-            <td><%= @nationalLongVeryHigh[index] %></td>
-            <td><%= @nationalChangeShort[index] %></td>
-            <td><%= @nationalChangeLongLow[index] %></td>
-            <td><%= @nationalChangeLongHigh[index] %></td>
-            <td><%= @foreignLowTcm[index] %></td>
-            <td><%= @foreignHighTcm[index] %></td>
-            <td><%= @otherTcm[index] %></td>
+            <td><%= @nationalShortLow[index].to_s.gsub('.',',') %>%</td>
+            <td><%= @nationalShortHigh[index].to_s.gsub('.',',') %>%</td>
+            <td><%= @nationalLongVeryLow[index].to_s.gsub('.',',') %>%</td>
+            <td><%= @nationalLongLow[index].to_s.gsub('.',',') %>%</td>
+            <td><%= @nationalLongHigh[index].to_s.gsub('.',',') %>%</td>
+            <td><%= @nationalLongVeryHigh[index].to_s.gsub('.',',') %>%</td>
+            <td><%= @nationalChangeShort[index].to_s.gsub('.',',') %>%</td>
+            <td><%= @nationalChangeLongLow[index].to_s.gsub('.',',') %>%</td>
+            <td><%= @nationalChangeLongHigh[index].to_s.gsub('.',',') %>%</td>
+            <td><%= @foreignLowTcm[index].to_s.gsub('.',',') %>%</td>
+            <td><%= @foreignHighTcm[index].to_s.gsub('.',',') %>%</td>
+            <td><%= @otherTcm[index].to_s.gsub('.',',') %>%</td>
           </tr>
         <% end %>
         <tr>
           <td>Mínimo</td>
-          <td><%= @nationalShortLow.min %></td>
-          <td><%= @nationalShortHigh.min %></td>
-          <td><%= @nationalLongVeryLow.min %></td>
-          <td><%= @nationalLongLow.min %></td>
-          <td><%= @nationalLongHigh.min %></td>
-          <td><%= @nationalLongVeryHigh.min %></td>
-          <td><%= @nationalChangeShort.min %></td>
-          <td><%= @nationalChangeLongLow.min %></td>
-          <td><%= @nationalChangeLongHigh.min %></td>
-          <td><%= @foreignLowTcm.min %></td>
-          <td><%= @foreignHighTcm.min %></td>
-          <td><%= @otherTcm.min %></td>
+          <td><%= @nationalShortLow.min.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalShortHigh.min.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalLongVeryLow.min.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalLongLow.min.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalLongHigh.min.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalLongVeryHigh.min.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalChangeShort.min.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalChangeLongLow.min.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalChangeLongHigh.min.to_s.gsub('.',',') %>%</td>
+          <td><%= @foreignLowTcm.min.to_s.gsub('.',',') %>%</td>
+          <td><%= @foreignHighTcm.min.to_s.gsub('.',',') %>%</td>
+          <td><%= @otherTcm.min.to_s.gsub('.',',') %>%</td>
         </tr>
         <tr>
           <td>Promedio</td>
-          <td><%= @nationalShortLow.all? ? @nationalShortLow.sum /  @count : '' %></td>
-          <td><%= @nationalShortHigh.all? ? @nationalShortHigh.sum /  @count : '' %></td>
-          <td><%= @nationalLongVeryLow.all? ? @nationalLongVeryLow.sum /  @count : '' %></td>
-          <td><%= @nationalLongLow.all? ? @nationalLongLow.sum /  @count : '' %></td>
-          <td><%= @nationalLongHigh.all? ? @nationalLongHigh.sum /  @count : '' %></td>
-          <td><%= @nationalLongVeryHigh.all? ? @nationalLongVeryHigh.sum /  @count : '' %></td>
-          <td><%= @nationalChangeLongLow.all? ? @nationalChangeLongLow.sum /  @count : '' %></td>
-          <td><%= @nationalChangeLongHigh.all? ? @nationalChangeLongHigh.sum /  @count : '' %></td>
-          <td><%= @foreignLowTcm.all? ? @foreignLowTcm.sum /  @count : '' %></td>
-          <td><%= @foreignHighTcm.all? ? @foreignHighTcm.sum /  @count : '' %></td>
-          <td><%= @otherTcm.all? ? @otherTcm.sum /  @count : ''%></td>
+          <td><%= @nationalShortLow.all? ? number_with_delimiter((@nationalShortLow.sum /  @count).round(2), delimiter: '.', separator: ',') : '' %>%</td>
+          <td><%= @nationalShortHigh.all? ? number_with_delimiter((@nationalShortHigh.sum /  @count).round(2), delimiter: '.', separator: ',') : '' %>%</td>
+          <td><%= @nationalLongVeryLow.all? ? number_with_delimiter((@nationalLongVeryLow.sum /  @count).round(2), delimiter: '.', separator: ',') : '' %>%</td>
+          <td><%= @nationalLongLow.all? ? number_with_delimiter((@nationalLongLow.sum /  @count).round(2), delimiter: '.', separator: ',') : '' %>%</td>
+          <td><%= @nationalLongHigh.all? ? number_with_delimiter((@nationalLongHigh.sum /  @count).round(2), delimiter: '.', separator: ',') : '' %>%</td>
+          <td><%= @nationalLongVeryHigh.all? ? number_with_delimiter((@nationalLongVeryHigh.sum /  @count).round(2), delimiter: '.', separator: ',') : '' %>%</td>
+          <td><%= @nationalChangeShort.all? ? number_with_delimiter((@nationalChangeShort.sum /  @count).round(2), delimiter: '.', separator: ',') : '' %>%</td>
+          <td><%= @nationalChangeLongLow.all? ? number_with_delimiter((@nationalChangeLongLow.sum /  @count).round(2), delimiter: '.', separator: ',') : '' %>%</td>
+          <td><%= @nationalChangeLongHigh.all? ? number_with_delimiter((@nationalChangeLongHigh.sum /  @count).round(2), delimiter: '.', separator: ',') : '' %>%</td>
+          <td><%= @foreignLowTcm.all? ? number_with_delimiter((@foreignLowTcm.sum /  @count).round(2), delimiter: '.', separator: ',') : '' %>%</td>
+          <td><%= @foreignHighTcm.all? ? number_with_delimiter((@foreignHighTcm.sum /  @count).round(2), delimiter: '.', separator: ',') : '' %>%</td>
+          <td><%= @otherTcm.all? ? number_with_delimiter((@otherTcm.sum /  @count).round(2), delimiter: '.', separator: ',') : ''%>%</td>
         </tr>
         <tr>
           <td>Máximo</td>
-          <td><%= @nationalShortLow.max %></td>
-          <td><%= @nationalShortHigh.max %></td>
-          <td><%= @nationalLongVeryLow.max %></td>
-          <td><%= @nationalLongLow.max %></td>
-          <td><%= @nationalLongHigh.max %></td>
-          <td><%= @nationalLongVeryHigh.max %></td>
-          <td><%= @nationalChangeShort.max %></td>
-          <td><%= @nationalChangeLongLow.max %></td>
-          <td><%= @nationalChangeLongHigh.max %></td>
-          <td><%= @foreignLowTcm.max %></td>
-          <td><%= @foreignHighTcm.max %></td>
-          <td><%= @otherTcm.max %></td>
+          <td><%= @nationalShortLow.max.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalShortHigh.max.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalLongVeryLow.max.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalLongLow.max.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalLongHigh.max.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalLongVeryHigh.max.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalChangeShort.max.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalChangeLongLow.max.to_s.gsub('.',',') %>%</td>
+          <td><%= @nationalChangeLongHigh.max.to_s.gsub('.',',') %>%</td>
+          <td><%= @foreignLowTcm.max.to_s.gsub('.',',') %>%</td>
+          <td><%= @foreignHighTcm.max.to_s.gsub('.',',') %>%</td>
+          <td><%= @otherTcm.max.to_s.gsub('.',',') %>%</td>
         </tr>
       </tbody>
     </table>

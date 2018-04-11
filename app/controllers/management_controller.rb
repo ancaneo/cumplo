@@ -74,29 +74,29 @@ class ManagementController < ApplicationController
           end
           
           nationalShortLowObj = tmcData[0..index_tmc].reverse.find{|object| object[:Tipo] === "1"|| object[:Tipo] === "2"|| object[:Tipo] === "10" || object[:Tipo] === "26"}
-          @nationalShortLow << (nationalShortLowObj ? nationalShortLowObj[:Valor].to_f : nil)
+          @nationalShortLow << (nationalShortLowObj ? nationalShortLowObj[:Valor].to_f.round(2) : nil)
           nationalShortHighObj = tmcData[0..index_tmc].reverse.find{|object| object[:Tipo] === "1"|| object[:Tipo] === "2"|| object[:Tipo] === "11" || object[:Tipo] === "25"}
-          @nationalShortHigh << (nationalShortHighObj ? nationalShortHighObj[:Valor].to_f : nil)
+          @nationalShortHigh << (nationalShortHighObj ? nationalShortHighObj[:Valor].to_f.round(2) : nil)
           nationalLongVeryLowObj = tmcData[0..index_tmc].reverse.find{|object| object[:Tipo] === "1"|| object[:Tipo] === "3"|| object[:Tipo] === "4"|| object[:Tipo] === "7 "|| object[:Tipo] === "30" || object[:Tipo] === "33" || object[:Tipo] === "45"}
-          @nationalLongVeryLow << (nationalLongVeryLowObj ? nationalLongVeryLowObj[:Valor].to_f : nil)
+          @nationalLongVeryLow << (nationalLongVeryLowObj ? nationalLongVeryLowObj[:Valor].to_f.round(2) : nil)
           nationalLongLowObj = tmcData[0..index_tmc].reverse.find{|object| object[:Tipo] === "1"|| object[:Tipo] === "3"|| object[:Tipo] === "5"|| object[:Tipo] === "7 "|| object[:Tipo] === "30" || object[:Tipo] === "33" || object[:Tipo] === "44"}
-          @nationalLongLow << (nationalLongLowObj ? nationalLongLowObj[:Valor].to_f : nil)
+          @nationalLongLow << (nationalLongLowObj ? nationalLongLowObj[:Valor].to_f.round(2) : nil)
           nationalLongHighObj = tmcData[0..index_tmc].reverse.find{|object| object[:Tipo] === "1"|| object[:Tipo] === "3"|| object[:Tipo] === "6"|| object[:Tipo] === "8 "|| object[:Tipo] === "27" || object[:Tipo] === "35"}
-          @nationalLongHigh << (nationalLongHighObj ? nationalLongHighObj[:Valor].to_f : nil)
+          @nationalLongHigh << (nationalLongHighObj ? nationalLongHighObj[:Valor].to_f.round(2) : nil)
           nationalLongVeryHighObj = tmcData[0..index_tmc].reverse.find{|object| object[:Tipo] === "1"|| object[:Tipo] === "3"|| object[:Tipo] === "6"|| object[:Tipo] === "9 "|| object[:Tipo] === "29" || object[:Tipo] === "34"}
-          @nationalLongVeryHigh << (nationalLongVeryHighObj ? nationalLongVeryHighObj[:Valor].to_f : nil)
+          @nationalLongVeryHigh << (nationalLongVeryHighObj ? nationalLongVeryHighObj[:Valor].to_f.round(2) : nil)
           nationalChangeShortObj = tmcData[0..index_tmc].reverse.find{|object| object[:Tipo] === "12" || object[:Tipo] === "21" || object[:Tipo] === "40"}
-          @nationalChangeShort << (nationalChangeShortObj ? nationalChangeShortObj[:Valor].to_f : nil)
+          @nationalChangeShort << (nationalChangeShortObj ? nationalChangeShortObj[:Valor].to_f.round(2) : nil)
           nationalChangeLongLowObj = tmcData[0..index_tmc].reverse.find{|object| object[:Tipo] === "20" || object[:Tipo] === "23" || object[:Tipo] === "24" || object[:Tipo] === "40"}
-          @nationalChangeLongLow << (nationalChangeLongLowObj ? nationalChangeLongLowObj[:Valor].to_f : nil)
+          @nationalChangeLongLow << (nationalChangeLongLowObj ? nationalChangeLongLowObj[:Valor].to_f.round(2) : nil)
           nationalChangeLongHighObj = tmcData[0..index_tmc].reverse.find{|object| object[:Tipo] === "30" || object[:Tipo] === "22" || object[:Tipo] === "23" || object[:Tipo] === "40"}
-          @nationalChangeLongHigh << (nationalChangeLongHighObj ? nationalChangeLongHighObj[:Valor].to_f : nil)
+          @nationalChangeLongHigh << (nationalChangeLongHighObj ? nationalChangeLongHighObj[:Valor].to_f.round(2) : nil)
           foreignLowTcmObj = tmcData[0..index_tmc].reverse.find{|object| object[:Tipo] === "15" || object[:Tipo] === "36" || object[:Tipo] === "38" || object[:Tipo] === "41"}
-          @foreignLowTcm << (foreignLowTcmObj ? foreignLowTcmObj[:Valor].to_f : nil)
+          @foreignLowTcm << (foreignLowTcmObj ? foreignLowTcmObj[:Valor].to_f.round(2) : nil)
           foreignHighTcmObj = tmcData[0..index_tmc].reverse.find{|object| object[:Tipo] === "15" || object[:Tipo] === "36" || object[:Tipo] === "38" || object[:Tipo] === "42"}
-          @foreignHighTcm << (foreignHighTcmObj ? foreignHighTcmObj[:Valor].to_f : nil)
+          @foreignHighTcm << (foreignHighTcmObj ? foreignHighTcmObj[:Valor].to_f.round(2) : nil)
           otherTcmObj = tmcData[0..index_tmc].reverse.find{|object| object[:Tipo] === 43}
-          @otherTcm << (otherTcmObj ? otherTcmObj[:Valor].to_f : nil)
+          @otherTcm << (otherTcmObj ? otherTcmObj[:Valor].to_f.round(2) : nil)
           day_str = day.strftime('%d/%m/%Y')
           @days << day_str
           @ufChart[day_str] = ufData[index_uf][:Valor].gsub('.','').gsub(',','.').to_f
